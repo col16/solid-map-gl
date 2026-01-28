@@ -38,9 +38,13 @@ export const Popup: Component<Props> = (props: Props) => {
       focusAfterOpen: false,
       ...create.options,
     })
-      .on("open", () => create.onOpen?.())
-      .on("close", () => create.onClose?.())
-      .addTo(ctx.map);
+    if (create.onOpen) {
+        popup.on("open", () => create.onOpen());
+    }
+    if (create.onClose) {
+        popup.on("close", () => create.onClose());
+    }
+    popup.addTo(ctx.map);
 
     // Update Position
     createEffect(() =>
